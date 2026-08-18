@@ -2,8 +2,7 @@ package org.example;
 
 import org.example.DataStructure.GraphStreamVisualizer;
 import org.example.DataStructure.TreeListener;
-import org.example.DataStructure.heaps.BinomialHeapNode;
-import org.example.DataStructure.heaps.LazyBinomialHeap;
+import org.example.DataStructure.heaps.*;
 import org.example.DataStructure.quadtree.QuadTree;
 import org.example.DataStructure.utils.Point2d;
 
@@ -63,7 +62,7 @@ public class Main {
     }
 
     public static void binomialHeapExample() {
-        LazyBinomialHeap heap1 = new LazyBinomialHeap(1, "Chanchito 1");
+        LazyBinomialHeap heap1 = new LazyBinomialHeap(11, "Chanchito 11");
         heap1.enqueue(2, "Chanchito 2");
         heap1.enqueue(3, "Chanchito 3");
         heap1.enqueue(4, "Chanchito 4");
@@ -72,31 +71,38 @@ public class Main {
         heap1.enqueue(7, "Chanchito 7");
         heap1.enqueue(8, "Chanchito 8");
         heap1.enqueue(9, "Chanchito 9");
-        heap1.enqueue(10, "Chanchito 10");
-        heap1.enqueue(11, "Chanchito 11");
-        heap1.enqueue(12, "Chanchito 12");
-        heap1.enqueue(13, "Chanchito 13");
-        heap1.enqueue(14, "Chanchito 14");
-        heap1.enqueue(15, "Chanchito 15");
-        heap1.enqueue(16, "Chanchito 16");
-        heap1.enqueue(17, "Chanchito 17");
-        heap1.enqueue(18, "Chanchito 18");
-        heap1.enqueue(19, "Chanchito 19");
-        heap1.enqueue(20, "Chanchito 20");
 
-        BinomialHeapNode minimo = heap1.extractMin();
+        // Antes
+        heap1.printHeapBySlots();
 
-        System.out.println();
-        System.out.println("MInimo es:");
-        if (minimo != null) {
-            minimo.printNode();
-        }
-        System.out.println();
-        System.out.println();
+        BinomialHeapNode chanchitoAEliminar = heap1.enqueue(10, "Chanchito 10");
 
+        heap1.decreaseKey(chanchitoAEliminar, 1);
+
+        // Despues
         heap1.printHeapBySlots();
     }
+
+    public static void fibonacciHeapExample() {
+        FibonacciHeap heap = new FibonacciHeap();
+        FibonacciHeapNode example =heap.enqueue(10, "Chanchito 1");
+        heap.enqueue(20, "Chanchito 2");
+        heap.enqueue(30, "Chanchito 3");
+        heap.enqueue(40, "Chanchito 4");
+        heap.enqueue(50, "Chanchito 5");
+
+        heap.printHeapBySlots();
+
+        heap.extractMin();
+
+        heap.printHeapBySlots();
+
+        heap.decreaseKey(example,1 );
+
+        heap.printHeapBySlots();
+    }
+
     public static void main(String[] args){
-        binomialHeapExample();
+        fibonacciHeapExample();
     }
 }

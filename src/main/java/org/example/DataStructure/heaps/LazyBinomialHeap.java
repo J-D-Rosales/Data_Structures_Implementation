@@ -19,7 +19,7 @@ public class LazyBinomialHeap {
         size = 1;
     }
 
-    public void enqueue(Integer key,String value) {
+    public BinomialHeapNode enqueue(Integer key,String value) {
         BinomialHeapNode newNode = new BinomialHeapNode(key, value);
         BinomialHeapNode tail = this.head.prev;
 
@@ -35,6 +35,7 @@ public class LazyBinomialHeap {
         if (newNode.key < min.key) {
             this.min = newNode;
         }
+        return newNode;
     }
 
     public void meld(LazyBinomialHeap heap) {
@@ -63,6 +64,8 @@ public class LazyBinomialHeap {
     }
 
 
+    // Extract Min
+    //________________________________________________________________________________________________
     public BinomialHeapNode extractMin(){
         if (this.head == null) {
             return null;
@@ -192,6 +195,45 @@ public class LazyBinomialHeap {
 
         // Al encontrar una casilla libre (null), colocamos el árbol consolidado
         slots[current.grade] = current;
+
+    }
+    //________________________________________________________________________________________________
+
+    public void decreaseKey(BinomialHeapNode node, Integer key){
+        // 1. Verificaciones
+        if (node == null || key == null) {
+            throw new IllegalArgumentException("El nodo no puede ser nulo. ni la llave tampoco");
+        }
+        if (key >= node.key) {
+            throw new IllegalArgumentException("La nueva clave debe ser menor que la actual.");
+        }
+        // 2. Actualizar la clave del nodo
+        node.key = key;
+
+        // 3. Hacer el fixeado hacia arriba
+        BinomialHeapNode temp = node;
+
+        while (temp.parent != null && temp.key < temp.parent.key) {
+            // Swampeamos
+            // valor y clave
+            int tempValue = temp.parent.key;
+            String tempValue2 = temp.parent.value;
+
+            temp.parent.key = temp.key;
+            temp.parent.value = temp.value;
+
+            temp.key = tempValue;
+            temp.value = tempValue2;
+
+            temp = temp.parent;
+
+
+        }
+        // El padre puede ser nulo, entonces estamos en una raiz
+
+        if (this.min == null || temp.key < this.min.key ){
+            this.min = temp;
+        }
 
     }
 
